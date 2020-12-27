@@ -1,0 +1,43 @@
+This is a SubMenu class I've created for those who need to use sub menus in their game.
+For those who don't know, a SubMenu is simply a menu with two levels. The upper level is the individual menus themselves. The lower level is the menu that is currently selected, that contains the items pertaining to that menu. An example is a closet. You have a section for dresses, suits, and other things. Each section is accessible by going through the contents of that section.
+SubMenus can also have more than two levels. This means, a sub menu inside of a sub menu. This class doesn't support this though.
+
+Functions:
+Add Sub Menu
+void add_sub_menu(string name_of_menu)
+Parameters:
+name_of_menu: The string of which the sub menu is titled.
+Return value:
+None
+Remarks:
+When adding a submenu, you must make sure that the menu you are adding doesn't already exist. If the menu already exists, the function will simply return without adding anything.
+Example:
+See menu_test.bgt.
+
+Add Sub Menu Item
+void add_sub_menu_item(string name_of_menu,string item_name)
+Parameters:
+name_of_menu: The string of which the sub menu is titled.
+item_name: The name of the item to be added to the specified sub menu.
+Return value:
+None
+Remarks:
+When adding a submenu item, you must make sure that the menu you are adding to already exists. If the menu doesn't exist, the function will simply return without adding anything.
+Example:
+See menu_test.bgt.
+
+Run
+string run(string title)
+Parameters:
+title: The title that the menu system should speak when launched.
+Return value:
+A string with the submenu name and item (separated by a colon) on success, or a blank string if no item was selected / on failure.
+Remarks:
+While the run loop is active, the user can use the Left and Right arrow keys to choose a submenu.
+When they find the menu they want, they can then use the up and down arrow keys to choose an item from the menu.
+Once they locate the desired item, pressing Enter will return the title of the submenu, along with the item name, separated with a colon. An example is the Edit submenu. If the submenu name was edit, and the user chose Cut, then the returning string would be
+"Edit:Cut"
+We could now check to see if the user chose a specific item by doing the result in an if statement.
+if(result=="Edit:Cut")
+Example:
+See menu_test.bgt.

@@ -1,0 +1,13 @@
+#include "text_input.bgt"
+text_input input;
+void main()
+{
+show_game_window("test");
+string result=input.input("Enter username.");
+if(result=="") exit();
+alert("Nice","Your username is "+result+".");
+string result2=input.input("Enter password.","",true,"hidden");
+if(result2=="") exit();
+alert("Nice","Your password is "+result2+".");
+exit();
+}

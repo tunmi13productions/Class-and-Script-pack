@@ -1,0 +1,57 @@
+//This is a simple slider class, with minimum and max values, as well as controlling whether the word percent is spoken or not, and whether all arrows are used. The user can then press Enter to choose the slider value. Home and End is supported to quickly change the slider to the minimum and maximum values.
+#include "speech.bgt"
+class slider{
+int min,max;
+bool say_percent=false;
+bool leftright=true,updown=true;
+slider(int minimum,int maximum,bool announce_percent=false,bool left_and_right=true,bool up_and_down=true)
+{
+this.min=minimum;
+this.max=maximum;
+this.say_percent=announce_percent;
+this.leftright=left_and_right;
+this.updown=up_and_down;
+}
+int run_slider(string title="")
+{
+if(title!="") speak(title);
+int sliderpos=this.min;
+while(true)
+{
+wait(5);
+if(key_pressed(KEY_DOWN) and this.updown and sliderpos>this.min)
+{
+sliderpos--;
+speak(sliderpos+(this.say_percent?" percent":""));
+}
+if(key_pressed(KEY_UP) and this.updown and sliderpos<this.max)
+{
+sliderpos++;
+speak(sliderpos+(this.say_percent?" percent":""));
+}
+if(key_pressed(KEY_LEFT) and this.leftright and sliderpos>this.min)
+{
+sliderpos--;
+speak(sliderpos+(this.say_percent?" percent":""));
+}
+if(key_pressed(KEY_RIGHT) and this.leftright and sliderpos<this.max)
+{
+sliderpos++;
+speak(sliderpos+(this.say_percent?" percent":""));
+}
+if(key_pressed(KEY_HOME))
+{
+sliderpos=this.min;
+speak(sliderpos+(this.say_percent?" percent":""));
+}
+if(key_pressed(KEY_END))
+{
+sliderpos=this.max;
+speak(sliderpos+(this.say_percent?" percent":""));
+}
+if(key_pressed(KEY_ESCAPE)) break;
+if(key_pressed(KEY_RETURN)) return sliderpos;
+}
+return -1;
+}
+}

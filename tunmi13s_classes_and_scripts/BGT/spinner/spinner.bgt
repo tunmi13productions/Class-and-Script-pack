@@ -1,0 +1,96 @@
+//This is a spinner class, which allows you to simulate a spinning wheel. Perfect for giving rewards in your games, and other things. Hopefully you find it useful.
+//This class allows you to spin either clockwise or counter-clockwise, as well as how much time it should spin for before stopping. You can control the starting speed and ending of the spinner as well.
+class spinner{
+string spinsound,direction;
+sound_pool pool;
+bool stopping=false;
+int startspeed,endspeed,stoptime,slowtime;
+timer startspeedtimer,endspeedtimer,stoptimer;
+string[]options;
+//The constructor, in which you assign the wheel items. You can also do this later, but be sure you do it before running the spinner or BGT will throw a tantrum.
+spinner(string[]o={})
+{
+spinsound="spinning.ogg"; //The sound to play when the spinner is spinning.
+direction="clockwise"; //The direction of the spinner. Clockwise = left, counter-clockwise = right.
+startspeed=75; //The spinner's default speed.
+endspeed=500; //The ending speed when the spinner slows down.
+stoptime=7500; //The time the spinner continues to spin before it slows down.
+slowtime=50; //The amount of milliseconds that is added to the spinner to gradually slow it to a halt.
+options=o;
+}
+//Adds an item to the spinner.
+void add_to_wheel(string item)
+{
+options.insert_last(item);
+}
+
+//Remove an item. In the case of there being several of these items, be sure to specify the position of that item. Also note that array positions always begin from 0, so if you have three items, its 0,1,2.
+void remove_from_wheel(string item,int position=-1)
+{
+//Was the position specified?
+if(position>-1)
+{
+for(uint i=0;i<options.length();i++)
+{
+if(i==position and options[i]==item)
+{
+options.remove_at(i);
+}
+}
+}
+//Otherwise just find the first entry.
+else
+{
+int removal=options.find(item);
+if(removal>-1)
+{
+options.remove_at(removal);
+}
+}
+}
+//The while loop of the spinner.
+string spin()
+{
+//To avoid problems from occurring, we check to be sure that the options are actually in place.
+if(options.length()<=2)
+{
+//Not worth spinning with this least of options, so we return a blank string.
+return "";
+}
+int sp=0;
+while(true)
+{
+wait(5);
+if(direction=="clockwise")
+{
+if(startspeedtimer.elapsed>startspeed)
+{
+startspeedtimer.restart();
+sp--;
+if(sp<=0) sp=options.length()-1;
+if(spinsound!="") pool.play_stationary(spinsound,false);
+if(stopping==true) startspeed+=slowtime;
+}
+}
+if(direction=="counter-clockwise")
+{
+if(startspeedtimer.elapsed>startspeed)
+{
+startspeedtimer.restart();
+sp++;
+if(sp>options.length()-1) sp=0;
+if(spinsound!="") pool.play_stationary(spinsound,false);
+if(stopping==true) startspeed+=slowtime;
+}
+}
+if(stoptimer.elapsed>stoptime and stoptimer.running)
+{
+stoptimer.pause();
+stopping=true;
+}
+if(startspeed>=endspeed)
+return options[sp];
+}
+return "";
+}
+}

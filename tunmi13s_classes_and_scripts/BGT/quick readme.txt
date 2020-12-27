@@ -1,0 +1,2 @@
+These are a set of scripts and classes I've developed in BGT. However I probably won't be modifying or updating them, since I am moving over to Python day by day. So you will likely see a Python version of this collection later.
+Enjoy.

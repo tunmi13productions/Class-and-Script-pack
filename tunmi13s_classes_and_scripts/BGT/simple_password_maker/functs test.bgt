@@ -1,0 +1,23 @@
+#include "password_functs.bgt"
+void main()
+{
+show_game_window("Password generator");
+string p1=input_box("Enter type of password to generate. Use ( an ) for alphanumeric, ( an+ ) for alphanumeric plus, ( n ) for numeric, or ( a ) for alphabetical.","");
+if(p1!="an" and p1!="an+" and p1!="a" and p1!="n")
+{
+alert("Error","That's not a valid parameter.");
+exit();
+}
+string p2=input_box("Enter length.","");
+if(p2=="") exit();
+int le=string_to_number(p2);
+string ret;
+if(p1=="an+") ret=generate_alphanumeric_password_plus(le);
+if(p1=="an") ret=generate_alphanumeric_password(le);
+if(p1=="a") ret=generate_alphabetic_password(le);
+if(p1=="n") ret=generate_numeric_password(le);
+alert("Password is: ",ret);
+int q=question("","Copy to clipboard?");
+if(q==1) clipboard_copy_text(ret);
+exit();
+}

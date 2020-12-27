@@ -1,0 +1,33 @@
+tts_voice tts;
+int found_reader=0;
+bool speak(string text, bool interrupt=true)
+{
+if(found_reader==0)
+found_reader=auto_select_screen_reader();
+if(found_reader==0)
+{
+
+// We cannot find a running screen reader, so we use a global tts_voice object.
+if(interrupt)
+tts.speak_interrupt(text);
+else
+tts.speak(text);
+}
+
+if(interrupt)
+screen_reader_speak_interrupt(found_reader, text);
+else
+screen_reader_speak(found_reader, text);
+return true;
+}
+
+int auto_select_screen_reader()
+{
+for(int i=1;i<=4;i++)
+{
+if(screen_reader_is_running(i)==false)
+continue;
+return i;
+}
+return 0;
+}

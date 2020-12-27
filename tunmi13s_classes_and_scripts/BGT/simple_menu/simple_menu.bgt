@@ -1,0 +1,146 @@
+//Simple Menu by tunmi13 productions
+//This is a simple menu. It doesn't hold all the features of dynamic_menu/dynamic_menu_pro, but it is enough to get any beginner started, or even any expert who wants something simple and not too complex. It holds the basic menu features, wrapping, home and end, music, and UI sounds.
+#include "speech.bgt"
+class simple_menu{
+string[]items,reference_items;
+sound click,enter,edge,wrap,open,music;
+string clicksound,opensound,entersound,edgesound,wrapsound;
+bool wrapping,updown,leftright,homeend,repeat_edge;
+simple_menu(){
+this.wrapping=false;
+this.repeat_edge=true;
+this.updown=true;
+this.leftright=true;
+this.homeend=false;
+this.clicksound="menuclick.ogg";
+this.entersound="menuenter.ogg";
+this.wrapsound="menuwrap.ogg";
+this.opensound="";
+this.edgesound="menuedge.ogg";
+if(entersound!="") enter.load(entersound);
+if(edgesound!="") edge.load(edgesound);
+if(opensound!="") open.load(opensound);
+if(clicksound!="") click.load(clicksound);
+if(wrapsound!="") wrap.load(wrapsound);
+}
+void reset(){
+items.resize(0);
+reference_items.resize(0);
+simple_menu();
+}
+void add_item(string itemname,string ref_item=""){
+if(ref_item=="") ref_item=itemname;
+items.insert_last(itemname);
+reference_items.insert_last(ref_item);
+}
+void add_music(string soundfile)
+{
+this.music.load(soundfile);
+}
+string get_item(int position){
+if(position>this.items.length()-1 or position<0) return "";
+return this.reference_items[position];
+}
+int run(string intro,bool interrupt=true){
+int mpos=0;
+speak(intro,interrupt);
+if(this.music.active) this.music.play_looped();
+if(this.open.active) this.open.play();
+while(true){
+wait(5);
+if(key_pressed(KEY_DOWN)and this.updown){
+if(mpos==this.items.length()-1){
+if(this.wrapping){
+this.wrap.stop(); this.wrap.play();
+mpos=0;
+speak(this.items[mpos],true);
+}
+else{
+this.edge.stop(); this.edge.play();
+if(this.repeat_edge) speak(this.items[mpos],true);
+}
+}
+else{
+mpos++;
+this.click.stop(); this.click.play();
+speak(this.items[mpos],true);
+}
+}
+if(key_pressed(KEY_UP)and this.updown){
+if(mpos==0){
+if(this.wrapping){
+this.wrap.stop(); this.wrap.play();
+mpos=this.items.length()-1;
+speak(this.items[mpos],true);
+}
+else{
+this.edge.stop(); this.edge.play();
+if(this.repeat_edge) speak(this.items[mpos],true);
+}
+}
+else{
+mpos--;
+this.click.stop(); this.click.play();
+speak(this.items[mpos],true);
+}
+}
+if(key_pressed(KEY_RIGHT)and this.leftright){
+if(mpos==this.items.length()-1){
+if(this.wrapping){
+this.wrap.stop(); this.wrap.play();
+mpos=0;
+speak(this.items[mpos],true);
+}
+else{
+this.edge.stop(); this.edge.play();
+if(this.repeat_edge) speak(this.items[mpos],true);
+}
+}
+else{
+mpos++;
+this.click.stop(); this.click.play();
+speak(this.items[mpos],true);
+}
+}
+if(key_pressed(KEY_LEFT)and this.leftright){
+if(mpos==0){
+if(this.wrapping){
+this.wrap.stop(); this.wrap.play();
+mpos=this.items.length()-1;
+speak(this.items[mpos],true);
+}
+else{
+this.edge.stop(); this.edge.play();
+if(this.repeat_edge) speak(this.items[mpos],true);
+}
+}
+else{
+mpos--;
+this.click.stop(); this.click.play();
+speak(this.items[mpos],true);
+}
+}
+if(key_pressed(KEY_HOME) and this.homeend){
+mpos=0;
+this.click.stop(); this.click.play();
+speak(this.items[mpos],true);
+}
+if(key_pressed(KEY_END) and this.homeend){
+mpos=this.items.length()-1;
+this.click.stop(); this.click.play();
+speak(this.items[mpos],true);
+}
+
+if(key_pressed(KEY_PRIOR) and this.music.active and this.music.volume<0) this.music.volume=this.music.volume+1;
+if(key_pressed(KEY_NEXT) and this.music.active and this.music.volume>-75) this.music.volume=this.music.volume-1;
+if(key_pressed(KEY_ESCAPE)){
+break;
+}
+if(key_pressed(KEY_RETURN)){
+this.enter.stop(); this.enter.play();
+return mpos;
+}
+}
+return -1;
+}
+}

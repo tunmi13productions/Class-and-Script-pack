@@ -1,0 +1,74 @@
+Simple Menu class by tunmi13
+This is a simple menu class that has basic necessities.
+
+Simple Menu
+simple_menu(*args,**kwargs):
+This class allows you to assign default values. There are no values set by default, so not inserting an option into the function will simply make that option its default state. For example, bools will always be false, strings will be blank, ints will be 0, etc.
+Here are the options you can set within the function. You can either set these values directly inside the init (s = simple_menu(clicksound = "click.ogg")) or you can set them after calling the menu.
+leftright: If true, the user will be able to use the left and right arrows to navigate the menu.
+updown: If true, the user will be able to use the up and down arrows to navigate the menu.
+wrap: If true, when the user reaches the edge of the menu, the menu will wrap back around to the first or last item.
+homeend: If this is true, the user can use the Home and End keys to quickly jump to the top or bottom of a menu.
+The following parameters are strings. All are blank by default unless specified in **kwargs or after creating the class.
+clicksound: Used for when the user arrows through the menu. A string specifying the click sound's file path.
+entersound: Used for when the user presses Enter on a menu item. A string specifying the enter sound's file path.
+wrapsound: Used for when the user wraps around back to the start or end of the menu. A string specifying the wrap sound's file path.
+opensound: Used for when the menu is presented to the user. A string specifying the open sound's file path.
+edgesound: Used for when the user encounters the edge of the menu, and wrapping is disabled. A string specifying the edge sound's file path.
+
+Functions:
+Add Item
+def add_item(title,reference_name)
+Parameters:
+title: The title of which will be displayed to the user when they encounter the item.
+reference_name: A different parameter that allows the programmer to reference the item easier. For example, if you wrote something like this in the title, "Disable  mouse usage", a reference name could be "dmu". If you don't give a value to this string, then the title will be used as the reference item.
+
+Return value:
+None
+Remarks:
+When creating an item, be sure that the reference name is different for each item. The menu will only return the first item reference that matches.
+Example:
+See test.py.
+
+Add Music
+def add_music(soundfile)
+Parameters:
+soundfile: The file path of the music you are trying to add.
+Return value:
+None
+Remarks:
+None
+Example:
+See test.py.
+
+Fade Music
+def fade_music(fadespeed):
+Parameters:
+fadespeed: The speed (in milliseconds) at which the music should fade. Default is 30.
+Return value:
+None
+Remarks:
+None
+
+Run
+def run(string title,interrupt = False)
+Parameters:
+title: The title that should be displayed when the menu is opened.
+interrupt: A bool specifying whether the title announcement should interrupt prior spoken text or not.
+Return value:
+The numerical position of the item that the user has selected on success, or -1 on error.
+Remarks:
+None
+Example:
+See test.py.
+
+Get Item Name
+def get_item_name(position){
+Parameters:
+position: The position in the array of items to search for.
+Return value:
+The name of the item at that position on success, or -1 on error.
+Remarks:
+This is useful for when you run a menu. After doing so, since the run value returns the position of the item selected, you could do something like if handle.get_item(result) == string_goes_here:. Keep in mind that the item returned by the get_item function is the reference item, not the item displayed to the user.
+Example:
+See test.py.

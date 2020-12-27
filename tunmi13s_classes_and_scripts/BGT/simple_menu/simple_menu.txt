@@ -1,0 +1,62 @@
+Simple Menu class by tunmi13
+This is a simple menu class that has basic necessities.
+
+Simple Menu
+Parameters:
+bool leftright: If true, the user will be able to use the left and right arrows to navigate the menu. True is the default setting.
+bool updown: If true, the user will be able to use the up and down arrows to navigate the menu. True is the default setting.
+bool wrap: If true, when the user reaches the edge of the menu, the menu will wrap back around to the first or last item. False is the default setting.
+bool homeend: If this is true, the user can use the Home and End keys to quickly jump to the top or bottom of a menu. False is the default setting.
+The following parameters are strings. Making them blank strings will disable the sounds.
+clicksound: Used for when the user arrows through the menu. A string specifying the click sound's file path. menuclick.ogg is the default setting.
+entersound: Used for when the user presses Enter on a menu item. A string specifying the enter sound's file path. menuenter.ogg is the default setting.
+wrapsound: Used for when the user wraps around back to the start or end of the menu. A string specifying the wrap sound's file path. menuwrap.ogg is the default setting.
+opensound: Used for when the menu is presented to the user. A string specifying the open sound's file path. This string is blank by default.
+edgesound: Used for when the user encounters the edge of the menu, and wrapping is disabled. A string specifying the edge sound's file path. menuedge.ogg is the default setting.
+
+Functions:
+Add Item
+void add_item(string title,string reference_name)
+Parameters:
+title: The title of which will be displayed to the user when they encounter the item.
+reference_name: A different parameter that allows the programmer to reference the item easier. For example, if you wrote something like this in the title, "Disable  mouse usage", a reference name could be "dmu". If you don't give a value to this string, then the title will be used as the reference item.
+
+Return value:
+None
+Remarks:
+When creating an item, be sure that the reference name is different for each item. The menu will only return the first item reference that matches.
+Example:
+See menu test.bgt.
+
+Add Music
+void add_music(string soundfile)
+Parameters:
+soundfile: The file path of the music you are trying to add.
+Return value:
+None
+Remarks:
+None
+Example:
+See menu test.bgt.
+
+Run
+int run(string title)
+Parameters:
+title: The title that should be displayed when the menu is opened.
+Return value:
+The numerical position of the item that the user has selected on success, or -1 on error.
+Remarks:
+None
+Example:
+See menu test.bgt.
+
+Get Item
+string get_item(int position){
+Parameters:
+position: The position in the array of items to search for.
+Return value:
+The name of the item at that position on success, or -1 on error.
+Remarks:
+This is useful for when you run a menu. After doing so, since the run value returns the position of the item selected, you could do something like if(handle.get_item(result)==string_goes_here). Keep in mind that the item returned by the get_item function is the reference item, not the item displayed to the user.
+Example:
+See menu test.bgt.

@@ -1,0 +1,17 @@
+This is the output class, created by the Lucia developers and contributors.
+This output class makes it easy to output speech to screen readers.
+The following functions are available.
+speak(text,interrupt=false): Speaks some text. Interrupt flag controls whether the speech should interrupt any prior spoken text.
+output.speak("Hi there.")
+output.speak("Bye.",True)
+silence(): Silences text.
+output.speak("Shut up.",True)
+output.silence()
+is_active(): Returns true or false based on whether system output is active or not.
+if output.is_active == False:
+	print("Oops. Where's your screen reader!")
+else:
+	output.speak("Oh hi there.")
+braille(text): Outputs text to a braille display, if one is connected.
+output.braille("Hello.")
+get_first_available_output(): Retrieves the first available output of your system and sets it as the default output.
