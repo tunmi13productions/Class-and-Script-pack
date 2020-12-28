@@ -6,6 +6,7 @@ import os
 import shutil
 import pyperclip
 from random import randint
+from math import *
 #This function takes the time.sleep() function and makes it take millisecond values. So you can do wait(5), and it will automatically be divided to output to time.sleep() as 0.005.
 def wait(milliseconds = 5):
 	time.sleep(milliseconds/1000)
@@ -17,7 +18,7 @@ def directory_create(path):
 		return True
 	except:
 		return False
-	def directory_delete(path):
+def directory_delete(path):
 	try:
 		os.rmdir(path)
 		return True
@@ -47,14 +48,14 @@ def file_copy(path,dest,overwrite=False):
 	if not overwrite and os.path.isfile(path):
 		return False
 	else:
-	shutil.copy(path,dest)
+		shutil.copy(path,dest)
 		return True
 
 #Clipboard functions
 def clipboard_copy_text(the_string):
 	try:
 		pyperclip.copy(the_string)
-	return True
+		return True
 	except:
 		return False
 
@@ -62,7 +63,7 @@ def clipboard_read_text():
 	return pyperclip.paste()
 
 #Other useful things that I just threw in here.
-def percentage(value1,value2)
+def percentage(value1,value2):
 	new_value = (value1/value2)*100
 	return new_value
 def get_file(path):
@@ -77,7 +78,13 @@ def edit_file(path,mode,data):
 	f = open(path,mode)
 	f.write(data)
 	f.close()
+
+#Mathematical operations.
 def absolute(value1,value2):
 	return abs(value1,value2)
 def random(value1,value2):
 	return randint(value1,value2)
+def power(base,exponent):
+	return base**exponent
+def square_root(value):
+	return sqrt(value)
