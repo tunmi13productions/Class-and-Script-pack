@@ -63,9 +63,6 @@ def clipboard_read_text():
 	return pyperclip.paste()
 
 #Other useful things that I just threw in here.
-def percentage(value1,value2):
-	new_value = (value1/value2)*100
-	return new_value
 def get_file(path):
 	if os.isfile(path):
 		f = open(path,"rb")
@@ -88,3 +85,6 @@ def power(base,exponent):
 	return base**exponent
 def square_root(value):
 	return sqrt(value)
+def percentage(value1,value2):
+	new_value = (value1/value2)*100
+	return new_value

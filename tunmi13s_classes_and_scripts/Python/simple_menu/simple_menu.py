@@ -43,9 +43,11 @@ class simple_menu:
 	def get_item_name(self,position):
 		if position > len(self.reference_items)-1 or position < 0: return ""
 		else: return self.reference_items[position]
-	def reset(self):
+	def reset(self,factory = True):
 		self.items.clear()
 		self.reference_items.clear()
+		if factory:
+			self.__init__()
 	def add_music(self,soundfile):
 		try:
 			self.music.load(soundfile)
