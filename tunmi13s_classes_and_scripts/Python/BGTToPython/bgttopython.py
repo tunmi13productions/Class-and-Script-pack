@@ -77,8 +77,8 @@ def edit_file(path,mode,data):
 	f.close()
 
 #Mathematical operations.
-def absolute(value1,value2):
-	return abs(value1,value2)
+def absolute(value):
+	return abs(value)
 def random(value1,value2):
 	return randint(value1,value2)
 def power(base,exponent):
