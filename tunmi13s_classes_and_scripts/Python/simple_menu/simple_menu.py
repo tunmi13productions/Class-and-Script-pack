@@ -6,16 +6,16 @@ import time
 if not lucia.running: lucia.initialize()
 class simple_menu:
 	def __init__(self,*args,**kwargs):
-		self.wrapping = kwargs.get("wrapping")
-		self.repeat_edge = kwargs.get("repeat_edge")
-		self.updown = kwargs.get("updown")
-		self.leftright = kwargs.get("leftright")
-		self.homeend = kwargs.get("homeend")
-		self.clicksound = kwargs.get("clicksound")
-		self.entersound = kwargs.get("entersound")
-		self.wrapsound = kwargs.get("wrapsound")
-		self.opensound = kwargs.get("opensound")
-		self.edgesound = kwargs.get("edgesound")
+		self.wrapping = kwargs.get("wrapping",False)
+		self.repeat_edge = kwargs.get("repeat_edge",True)
+		self.updown = kwargs.get("updown",True)
+		self.leftright = kwargs.get("leftright",False)
+		self.homeend = kwargs.get("homeend",True)
+		self.clicksound = kwargs.get("clicksound","")
+		self.entersound = kwargs.get("entersound","")
+		self.wrapsound = kwargs.get("wrapsound","")
+		self.opensound = kwargs.get("opensound","")
+		self.edgesound = kwargs.get("edgesound","")
 		self.items = []
 		self.reference_items = []
 		self.pool = lucia.audio_backend.SoundPool()
@@ -40,6 +40,9 @@ class simple_menu:
 			self.items.append(str(name))
 			if internal_name == "":
 				self.reference_items.append(str(name))
+			else:
+				self.reference_items.append(str(internal_name))
+
 	def get_item_name(self,position):
 		if position > len(self.reference_items)-1 or position < 0: return ""
 		else: return self.reference_items[position]
@@ -126,6 +129,7 @@ class simple_menu:
 				self.music.volume = self.music.volume-5
 			if lucia.key_pressed(lucia.K_ESCAPE): break
 			if lucia.key_pressed(lucia.K_RETURN):
+				if mpos < 0 or mpos > len(self.items): continue
 				self.playenter()
 				return mpos
 		return -1
