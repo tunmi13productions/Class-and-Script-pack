@@ -43,7 +43,7 @@ def lister(list):
 	return final
 
 def list_to_linear(the_list):
-	"""This converts a list into a linear format. Useful for making files that refer to a list and need to be converted into something the file can write.
+	"""This converts a list into a linear format. Useful for making files that refer to a list and need to be converted into something the file can write. Returns a string containing the linear data on success, or a blank string on failure.
 		Parameters:
 			the_list (list): The list to be converted.
 	"""
@@ -54,7 +54,7 @@ def list_to_linear(the_list):
 	return final
 
 def linear_to_list(the_string):
-	"""This converts a linear string back into a list format. Useful for reading linear files and then converting them back to lists.
+	"""This converts a linear string back into a list format. Useful for reading linear files and then converting them back to lists. Returns a list on success, or an empty list on failure.
 		Parameters:
 			the_string (str): The string to be converted.
 	"""
@@ -62,51 +62,3 @@ def linear_to_list(the_string):
 	final = the_string.split("\n")
 	return final
 
-def convert_ms(ms):
-	"""Converts milliseconds into a readable format. NOTE: This function is rather messy, but it does the job quite well. Also note that the calculation of days is set to 30, since it's not always possible to know how many exact days a month will have.
-		Parameters:
-			ms(int): The milliseconds to be converted.
-	"""
-	if ms < 1000: return "No time at all."
-	final = ""
-	secs = round(ms/1000,0)
-	mins = round(secs/60)
-	secs%=60
-	secs = round(secs)
-	hours = round(mins/60)
-	mins%=60
-	mins = round(mins)
-	days = round(hours/24)
-	hours%=24
-	hours = round(hours)
-	weeks = round(days/7)
-	days%=7
-	days = round(days)
-	months = round(weeks/4)
-	weeks%=4
-	weeks = round(weeks)
-	years = round(months/12)
-	months%=12
-	months = round(months)
-	if years > 0:
-		if years == 1: final+=strs(year)+" year. "
-		else: final+=str(years)+" years. "
-	if months > 0:
-		if months == 1: final+=str(months)+" month. "
-		else: final+=str(months)+" months. "
-	if weeks > 0:
-		if weeks == 1: final+=str(weeks)+" week. "
-		else: final+=str(weeks)+" weeks. "
-	if days > 0:
-		if days == 1: final+=str(days)+" day. "
-		else: final+=str(days)+" days. "
-	if hours > 0:
-		if hours == 1: final+=str(hours)+" hour. "
-		else: final+=str(hours)+" hours. "
-	if mins > 0:
-		if mins == 1: final+=str(mins)+" minute. "
-		else: final+=str(mins)+" minutes. "
-	if secs > 0:
-		if secs == 1: final+=str(secs)+" second."
-		else: final+=str(secs)+" seconds."
-	return final
