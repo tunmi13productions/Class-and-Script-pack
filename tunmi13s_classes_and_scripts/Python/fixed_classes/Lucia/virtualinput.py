@@ -75,11 +75,11 @@ class VirtualInput:
 		if len(the_string) > 0:
 			self.current_string += the_string
 			self._cursor = len(self.current_string)-1
-			speak("Text pasted.")
+			lucia.output.output("Text pasted.")
 	def copy(self):
 		if len(self.current_string) == 0: return
 		pyperclip.copy(self.current_string)
-		speak("Text copied.")
+		lucia.output.output("Text copied.")
 
 	def clear(self):
 		"""Resets the input. This can be called outside of the class, but run will also do this internally upon every call
@@ -132,8 +132,8 @@ class VirtualInput:
 			character (str): The character to be outputted
 		"""
 		if not self.repeating_characters: return
-		if self.hidden: speak(self.password_message)
-		else: speak(self.translate_character(character))
+		if self.hidden: lucia.output.output(self.password_message)
+		else: lucia.output.output(self.translate_character(character))
 	def translate_character(self,char):
 		char.replace("!","exclamation mark")
 		char.replace("@","at")
@@ -193,7 +193,7 @@ class VirtualInput:
 		Return Value:
 			self.current_text (str): What the user entered
 		"""
-		speak(message)
+		lucia.output.output(message)
 		self.clear()
 		while True :
 			events = lucia.process_events()
@@ -206,7 +206,7 @@ class VirtualInput:
 					elif self.can_escape and event.key == lucia.K_ESCAPE:
 						return ""
 					elif event.key == lucia.K_BACKSPACE: self.remove_character()
-					elif event.key == lucia.K_TAB: speak(self.current_string)
+					elif event.key == lucia.K_TAB: lucia.output.output(self.current_string)
 					elif event.key == lucia.K_LEFT:
 						self.move_in_string(-1)
 						self.speak_character(self.get_character())
@@ -218,7 +218,7 @@ class VirtualInput:
 					elif event.key == lucia.K_END:
 						self.snap_to_bottom()
 					elif event.key == lucia.K_F2:
-						speak("Character repeat on") if self.toggle_character_repetition() else speak("Character repeat off")
+						lucia.output.output("Character repeat on") if self.toggle_character_repetition() else lucia.output.output("Character repeat off")
 					elif ctrldown() and event.key == lucia.K_v: self.paste()
 					elif ctrldown() and event.key == lucia.K_c: self.copy()
 
