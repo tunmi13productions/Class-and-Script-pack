@@ -29,17 +29,18 @@ def write_file(path,contents,mode = "wb",overwrite = True):
 			temp.write(contents)
 			return True
 
-def lister(list):
+def lister(list,delimiter = ","):
 	"""This function converts a list into a readable format. For example, providing a list that has 1, 2, 3, will be returned as 1, 2, and 3. If the list is blank, it will return a blank string, and if the list only has one element, it will return just that element.
 		Parameters:
 			list (list): The list to be converted.
+			delimiter (optional str): the element that should separate your list. Default is comma. NOTE: Spaces are not affected.
 	"""
 	if len(list) == 0: return ""
 	if len(list) == 1: return list[len(list)-1]
 	final = ""
 	for i in range(0,len(list)):
 		if i == len(list)-1: final += "and "+str(list[i])
-		else: final += str(list[i])+", "
+		else: final += str(list[i])+delimeter+" "
 	return final
 
 def list_to_linear(the_list):
