@@ -1,33 +1,22 @@
-import random
-from random import randrange
+import string
+from random import choice
+
 def generate_alphanumeric_password(length = 10):
-	ret = ""
-	generation = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-	for i in range(length):
-		g = randrange(len(generation))
-		ret += generation[g]
+	password_characters = string.ascii_letters + string.digits
+	ret="".join(choice(password_characters) for i in range(length))
 	return ret
 
 def generate_alphanumeric_password_plus(length = 10):
-	ret = ""
-	generation = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890./!@#$%^&*()_+<>?-=`~|"
-	for i in range(length):
-		g = randrange(len(generation))
-		ret += generation[g]
+	password_characters = string.ascii_letters + string.digits + string.punctuation
+	ret="".join(choice(password_characters) for i in range(length))
 	return ret
 
 def generate_numeric_password(length = 10):
-	ret = ""
-	generation = "1234567890"
-	for i in range(length):
-		g = randrange(len(generation))
-		ret+=generation[g]
+	password_characters = string.digits
+	ret="".join(choice(password_characters) for i in range(length))
 	return ret
 
 def generate_alphabetic_password(length = 10):
-	ret = ""
-	generation = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	for i in range(length):
-		g = randrange(len(generation))
-		ret+=generation[g]
+	password_characters = string.ascii_letters
+	ret="".join(choice(password_characters) for i in range(length))
 	return ret
