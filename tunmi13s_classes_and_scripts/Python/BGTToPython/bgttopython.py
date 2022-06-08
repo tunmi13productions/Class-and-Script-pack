@@ -28,16 +28,26 @@ def directory_exists(path):
 	return os.path.isdir(path)
 def file_exists(path):
 	return os.isfile(path)
-def find_files(dest):
+def find_recursive(path, wildcard='*.*'):
+	files = []
+	for r, d, f in os.walk(path):
+		for file in f:
+			if wildcard in file or wildcard == '*.*':
+				files.append(os.path.join(r, file))
+	return files
+def find_files(path):
 	list = []
-	for f in os.listdirs(dest):
-		if os.dest.isfile(f): list.append(f)
-	return f
-def find_directories(dest):
-	list = []
-	for f in os.listdirs(dest):
-		if os.dest.isdir(f): list.append(f)
-	return f
+	for f in os.listdir(path):
+		if os.path.isfile(os.path.join(path,f)): list.append(f)
+	return list
+def find_directories(path):
+	l = []
+	for each in os.listdir(path):
+		if os.path.isdir(os.path.join(path,each)):
+			l.append(each)
+	return l
+
+
 def file_delete(path):
 	if os.path.isfile(path):
 		os.remove(path)
