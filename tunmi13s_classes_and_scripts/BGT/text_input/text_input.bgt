@@ -200,7 +200,7 @@ speak_character_at(cursor);
 }
 if(key_pressed(KEY_END))
 {
-cursor=entry.length()-1;
+cursor=entry.length();
 speak_character_at(cursor);
 }
 if(key_pressed(KEY_F1))
