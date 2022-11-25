@@ -48,14 +48,13 @@ class map3D:
    z (int): The z coordinate you would like to retrieve the surface name from.
   Returns
    A string containing the name of the surface, or a blank string on failure."""
-  sfname = ""
   #To retrieve the platform as quickly as possible, especially if using a map with several surfaces, it's best to go backward.
   for i in reversed(self.surfaces):
    if x < i.min_x: continue
    if y < i.min_y: continue
    if z < i.min_z: continue
-   if i.min_x <=x and i.max_x >= x and i.min_y <= y and i.max_y >= y and i.min_z <= z and i.max_z >= z: sfname = i.name
-  return sfname
+   if i.min_x <=x and i.max_x >= x and i.min_y <= y and i.max_y >= y and i.min_z <= z and i.max_z >= z: return i.name
+  return ""
  def add_zone(self,min_x,max_x,min_y,max_y,min_z,max_z,text):
   """Creates an area of text on your map to signify an important area, such as outside a house or inside a house. You could create something to get the zone in the user's current area, as that is not provided here.
   Properties
