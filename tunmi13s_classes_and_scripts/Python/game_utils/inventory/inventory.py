@@ -40,7 +40,11 @@ class inventory:
   for i in self.items:
    if i.name == name: return i
   return None
-
+ #Retrieves the amount of an item, if it exists.
+ def get_item_amount(self,name):
+  i = self.get_item(name)
+  if i: return i.amount
+  return 0
  #This function outputs the inventory in an INI format, which can then be read, copied, pasted, etc etc.
  @property
  def to_ini(self):
