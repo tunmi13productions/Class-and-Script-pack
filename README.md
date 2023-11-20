@@ -1,31 +1,20 @@
 # Class and Script pack
 
-This archive contains scripts, classes, and useful functions that I've either created manually or obtained from open-source projects such as Lucia. There are both scripts from BGT and Python in this archive.
+This archive contains scripts, classes, and useful functions that I've either created manually or obtained from open-source projects such as [Lucia][lucia].
 
-# BGT
+## Python
+Inside this folder is everything related to [Python][py]. I will try to update and modify it in my spare time. If you notice anything wrong though, do not hesitate to contact me, open an issue, or submit a pull request.
 
-Inside the BGT folder you will find all the classes and scripts relating to the BGT language. 
+NOTE: All attempts to simulate BGT have been depricated! Functions are simplified, but otherwise BGT is no longer the focus of this repository.
 
-Keep in mind that I will no longer be working on these, since I have mostly moved onto Python, so the Python folder is where I'll be doing work and adding things.
+## Conclusion
 
-# Python
+I hope this helps people who are slowly moving over from BGT to [Python][py], or even those who don't know where to start.
 
-Inside this folder is everything related to Python. I've been working on this section, and will continue to work on it in my spare time. If you notice anything wrong though, do not hesitate to contact me.
+## Credits
 
-I've also began the process of implementing things from BGT into Python, in a folder called BGTToPython. The functions that people were familiar with when BGT was still alive are slowly being transferred into this script. So all you have to do is call 
+- Thanks goes to the [Lucia][lucia] developers and contributors, which is partially used in this collection of scripts and classes.
+- Thanks goes to BrailleScreen in his attempt to improve the repo.
 
-import bgttopython
-
-in your script, and you'll be set to do things like this.
-
-bgttopython.wait(5)
-
-bgttopython.directory_exists(path)
-
-# Conclusion
-
-I hope this helps people who are slowly moving over from BGT to Python, just like I am.
-
-# Credits
-
-Thanks goes to the Lucia developers and contributors, Lucia is partly used in this collection of scripts and classes.
+[py]: <https://www.python.org>
+[lucia]: <https://github.com/luciasoftware/lucia>
