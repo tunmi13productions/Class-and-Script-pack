@@ -7,7 +7,10 @@ inv.give("sandwich",1)
 #Print it in INI format.
 print(inv.to_ini)
 #Completely change the inventory with this. I want breakfast now! Remember \n (backslash n) means a line feed.
-new_inv = "pancakes=10\nbottle of syrup=1\nplate of scrambled eggs=1\nplate of bacon=1"
+new_inv = """pancakes=10
+bottle of syrup=1
+plate of scrambled eggs=1
+plate of bacon=1"""
 inv.from_ini(new_inv,True)
 #Print the new inventory.
 print(inv.to_ini)
