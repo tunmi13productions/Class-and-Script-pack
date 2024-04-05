@@ -1,20 +1,12 @@
-# Class and Script pack
+# Class and Script pack (Legacy Branch)
 
-This archive contains scripts, classes, and useful functions that I've either created manually or obtained from open-source projects such as [Lucia][lucia].
+This branch contains the BGT classes and scripts I previously worked on before becoming a Python programmer.
 
-## Python
-Inside this folder is everything related to [Python][py]. I will try to update and modify it in my spare time. If you notice anything wrong though, do not hesitate to contact me, open an issue, or submit a pull request.
+None of these are being developed anymore, so I recommend the main branch. That branch holds all the Python-related classes and scripts.
 
-NOTE: All attempts to simulate BGT have been depricated! Functions are simplified, but otherwise BGT is no longer the focus of this repository.
+## Installation
+In order to run these BGT files, you must obtain the BGT installer. By default, Windows does not support BGT files. This will install the interpreter.
 
-## Conclusion
+You can find the installer on places such as Blind Help, or fellow friends.
 
-I hope this helps people who are slowly moving over from BGT to [Python][py], or even those who don't know where to start.
-
-## Credits
-
-- Thanks goes to the [Lucia][lucia] developers and contributors, which is partially used in this collection of scripts and classes.
-- Thanks goes to BrailleScreen in his attempt to improve the repo.
-
-[py]: <https://www.python.org>
-[lucia]: <https://github.com/luciasoftware/lucia>
+Have fun!
