@@ -32,7 +32,7 @@ def game():
  while True:
   #Another thing required to keep the window active is to also update the display. Otherwise, again, it will freeze.
   pygame.display.update()
-  #Make the clock tick. If you are/were a BGT user, this is an alternative to wait.
+  #Make the clock tick. If you are/were a BGT user, this is an alternative to wait. This uses seconds, not milliseconds.
   clock.tick(50)
   #This is how you handle keyboard events. Some people are probably used to key_pressed, key_down, etc. But in Pygame, here is how you would go about doing this.
   #First, get a list of events that are happening in Pygame.
