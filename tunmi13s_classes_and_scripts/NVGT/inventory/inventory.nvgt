@@ -1,0 +1,127 @@
+/*
+Inventory
+A simple inventory for a basic game, primarily made for simplicity and not advanced usage
+*/
+
+
+//The class for the inventory item.
+class inventory_item{
+string name;
+int amount;
+inventory_item(const string&in n, const int&in a){
+name = n;
+amount = a;
+}
+}
+
+class inventory{
+inventory_item@[]items(0);
+int position = 0;
+inventory(){
+//An empty constructor.
+}
+
+int get_item_index(const string&in name){
+//Gets an item based on its name. Returns the index of the item on success, or -1 on failure. Names are case sensitive, meaning orange is not the same as Orange.
+for(uint i = 0; i < items.length(); i ++){
+if(items[i].name == name)
+return i;
+}
+return -1;
+}
+
+inventory_item@get_item(const string&in name){
+//Gets an item based on its name. Returns the handle of the item on success, or null on failure. Names are case sensitive, meaning orange is not the same as Orange.
+for(uint i = 0; i < items.length(); i ++){
+if(items[i].name == name)
+return items[i];
+}
+return null;
+}
+
+int get_item_amount(const string&in name){
+//Retrieves the amount of a given item. Returns the amount of the item on success, or 0 to indicate there is none.
+inventory_item@i = get_item(name);
+if(@i != null)
+return i.amount;
+else
+return 0;
+}
+
+string get_current_item(){
+//Gets the name of the item based on the actual position in the inventory. Returns the amount on success, or a blank string if the position is invalid.
+if(position>-1 and position<=items.length()-1)
+return items[position].name;
+else
+return "";
+}
+
+int get_current_item_amount(){
+//Gets the amount of the item based on the actual position in the inventory. Returns the amount on success, or 0 if the position is invalid.
+if(position>-1 and position<=items.length()-1)
+return items[position].amount;
+else
+return 0;
+}
+
+string item_string(){
+//Provides a human-friendly string of the current item and its amount that can be passed as speech.
+if(items.length() == 0)
+return "Empty";
+string item_name = get_current_item();
+int item_amount = get_current_item_amount();
+int actual_position = position + 1; //This is necessary, since position starts from 0. We push this variable forward one so that it makes sense.
+return item_name+", "+item_amount+". "+actual_position+" of "+items.length();
+}
+
+bool give(const string&in item, const int&in amount){
+//Gives or takes the amount of the specified item from the inventory. Passing a negative value subtracts from the item, while a positive value adds to it. If the value is below 0, the item is deleted from the inventory.
+int i = get_item_index(item);
+if(i>-1){
+items[i].amount += amount;
+if(items[i].amount <= 0)
+items.remove_at(i);
+return true;
+}
+else{
+inventory_item itm(item, amount);
+if(itm.amount <= 0)
+return false;
+else{
+items.insert_last(itm);
+return true;
+}
+}
+}
+
+bool cycle(int direction = 1, bool wrap = true){
+//Cycles between items in the inventory. Setting direction variable to 0 cycles backward, while leaving it at its default (1) cycles forward. Wrap controls whether the cycling process should wrap back to the top or back to the bottom when cycling. Returns true if movement is accomplished, false otherwise.
+if(items.length() == 0)
+return false; //Quickly catches the fact that the inventory may not have any items to prevent incorrect indexing.
+if(direction == 1){
+if(position >= items.length() - 1){
+if(wrap)
+position = 0;
+else
+return false;
+}
+else{
+position += 1;
+return true;
+}
+}
+if(direction == 0){
+if(position <= 0){
+if(wrap)
+position = items.length() - 1;
+else
+return false;
+}
+else{
+position -= 1;
+return true;
+}
+}
+return false;
+}
+}

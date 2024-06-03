@@ -1,0 +1,50 @@
+//A simple script to test the inventory.
+#include "inventory.nvgt"
+void main(){
+show_window("Inventory Test");
+inventory inv;
+//Add some sample items.
+inv.give("cookies", 10);
+inv.give("donuts", 10);
+inv.give("sandwiches", 10);
+
+//Start while loop.
+while(!key_pressed(KEY_ESCAPE)){
+wait(5);
+//Up and down arrows will cycle.
+if(key_pressed(KEY_UP)){
+inv.cycle(0);
+screen_reader_speak(inv.item_string(), false);
+}
+else if(key_pressed(KEY_DOWN)){
+inv.cycle();
+screen_reader_speak(inv.item_string(), false);
+}
+//Left and right arrows will increase or decrease the selected item by 1.
+else if(key_pressed(KEY_LEFT)){
+inv.give(inv.get_current_item(), -1);
+screen_reader_speak(inv.item_string(), false);
+}
+else if(key_pressed(KEY_RIGHT)){
+inv.give(inv.get_current_item(), 1);
+screen_reader_speak(inv.item_string(), false);
+}
+//Let the user give themselves whatever item they wish.
+else if(key_pressed(KEY_G)){
+string item_name = input_box("What would you like?", "");
+if(item_name == ""){
+alert("What?", "Nothing? Okay then...");
+continue;
+}
+string item_amount = input_box("How much of this would you like?", "1");
+if(item_amount == ""){
+alert("Nothing", "Alright then. You get nothing!");
+continue;
+}
+bool attempt=inv.give(item_name, parse_int(item_amount));
+screen_reader_speak(item_amount+" "+item_name+" "+(!attempt?"not":"was")+" given.", true);
+}
+}
+alert("Goodbye", "Thanks for testing!");
+exit();
+}
