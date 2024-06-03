@@ -13,7 +13,7 @@ This repository now comes with an NVGT folder!
 That being said, this folder contains classes and scripts specifically made for NVGT.
 
 ## Legacy
-[NVGT[nvgt] contains a compatibility script that makes it significantly easier to port old BGT scripts into the new engine by utilizing old function names and properties, which hold their NVGT variants inside.
+[NVGT][nvgt] contains a compatibility script that makes it significantly easier to port old BGT scripts into the new engine by utilizing old function names and properties, which hold their NVGT variants inside.
 
 That being said, the classes and scripts that were in BGT can be ported into [NVGT][nvgt]. These can be found in the [legacy branch][old]. I would port these myself, but I don't have the patience as of right now, but feel free to port them yourself :).
 
