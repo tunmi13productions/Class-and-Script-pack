@@ -1,0 +1,5 @@
+#include "readable_time.nvgt"
+void main(){
+int64 ms = 86400000; // Should return a day.
+alert("Result", ms_to_readable_time(ms));
+}
