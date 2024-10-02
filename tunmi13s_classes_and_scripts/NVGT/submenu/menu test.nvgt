@@ -1,0 +1,27 @@
+#include "submenu_system.nvgt"
+void main()
+{
+show_window("submenu test");
+sub_menu_system s;
+//Add all the sub menus to the system.
+s.add_sub_menu("cookies");
+s.add_sub_menu("doughnuts");
+s.add_sub_menu("beverages");
+//Add all the items to the sub menus we just created.
+s.add_sub_menu_item("cookies","chocolate chip");
+s.add_sub_menu_item("cookies","M&M");
+s.add_sub_menu_item("cookies","oreo");
+s.add_sub_menu_item("doughnuts","glazed");
+s.add_sub_menu_item("doughnuts","frosted");
+s.add_sub_menu_item("doughnuts","powdered");
+s.add_sub_menu_item("beverages","soda");
+s.add_sub_menu_item("beverages","coffee");
+s.add_sub_menu_item("beverages","juice");
+string result=s.run("Select an option.");
+//Check the result and display the string using an alert.
+if(result!="")
+{
+alert("Result",result);
+}
+else exit();
+}
