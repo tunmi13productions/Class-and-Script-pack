@@ -1,0 +1,2 @@
+A set of classes and scripts coded in other languages  to be  compatible  with the Non Visual Gaming Toolkit created by Sam Tupy.
+All of these classe and scripts were coded by me, with assistance from GPT-4 for things beyond my skill level.
