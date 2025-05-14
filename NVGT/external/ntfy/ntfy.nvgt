@@ -1,0 +1,50 @@
+/*
+This script sends a push notification via ntfy.sh (https://ntfy.sh/)
+ntfy is a simple HTTP-based pub/sub service for sending notifications to phones, desktops, or browsers.
+This function sends a POST request to the ntfy topic with optional title, priority, and tags.
+*/
+
+// Helpful constants to hopefully simplify things.
+const string NTFY_PRIORITY_MIN = "min"; // 1
+const string NTFY_PRIORITY_LOW  = "low"; // 2
+const string NTFY_PRIORITY_DEFAULT = "default"; // 3
+const string NTFY_PRIORITY_HIGH = "high"; // 4
+const string NTFY_PRIORITY_MAX = "max"; // 5
+
+// Use a callback while sending. This callback may take parameters later.
+funcdef void ntfy_callback();
+void send_ntfy_message(
+	const string&in topic,
+	const string&in message,
+	const string&in title = "",
+	const string&in priority = "",
+	const string&in tags = "",
+	ntfy_callback@ nt_callback = null
+) {
+	// If you are hosting your own ntfy server, you can change this line.
+	string url = "https://ntfy.sh/" + topic;
+
+	internet_request req;
+	req.set_payload(message);
+
+	// Optional headers
+	if (title != "")
+		req.set_header("Title", title);
+	if (priority != "")
+		req.set_header("Priority", priority);
+	if (tags != "")
+		req.set_header("Tags", tags);
+	req.post(url, message);
+
+	timer timeout_timer;
+	int timeout_time = 10000; // 10 seconds.
+	while (!req.complete) {
+		if (@nt_callback != null)
+			nt_callback();
+		if(timeout_timer.elapsed >= timeout_time)
+			break;
+		// Comment this if you wish, or have the callback do something.
+		refresh_window();
+	}
+}
+

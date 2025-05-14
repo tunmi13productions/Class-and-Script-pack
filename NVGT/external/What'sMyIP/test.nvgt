@@ -1,0 +1,6 @@
+#pragma plugin nvgt_curl
+#include "ip.nvgt"
+void main(){
+	string my_ip = get_my_ip();
+	alert("Information", my_ip);
+}

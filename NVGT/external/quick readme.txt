@@ -1,0 +1,1 @@
+A handful of scripts and classes that allow NVGT to hook up to  API's, web services, or retrieve information from external sources.

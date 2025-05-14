@@ -1,0 +1,16 @@
+#pragma plugin nvgt_curl
+#include "ntfy.nvgt"
+
+void main(){
+	show_window("NTFY Test");
+	// Change this topic to something secure (think of it as a key). No placeholder is specified here, to prevent people from having their devices spammed, asuming they are using ntfy.sh.
+	string topic = "";
+	string message = "This is a test. Did it work?";
+	string title = "NVGT ntfy Test";
+	if(topic.is_empty() || message.is_empty() || title.is_empty()){
+		alert("Error", "One or more strings are blank.");
+		exit();
+	}
+	send_ntfy_message(topic, message, title);
+	alert("Done", "");
+}

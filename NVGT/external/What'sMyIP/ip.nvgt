@@ -1,0 +1,23 @@
+// A script that refers to What'sMyIP for your public IP address (https://whatsmyip.com/)
+
+string get_my_ip() {
+	internet_request req("https://api.ipify.org", false); // false = don't auto-perform
+	req.follow_redirects = true;
+	bool started = req.perform();
+
+	if (!started)
+		return ""; // Failed to start request
+
+	timer timeout_timer;
+	const int timeout_ms = 5000; // 5 seconds
+
+	while (!req.complete) {
+		if (timeout_timer.elapsed >= timeout_ms)
+			return ""; // Timed out
+	}
+
+	if (req.status_code == 200)
+		return req.response_body; // Successful, return IP (with whitespace trimmed)
+	else
+		return ""; // Failed or server error
+}

@@ -1,0 +1,173 @@
+/*
+This was previously something I coded when I was about 15 or 16.
+Just recently, I had Claude do a massive overhaul, so it has some additional perks.
+This buffer system was leaked a few times as well, but I digress.
+*/
+
+buffer@[] buffers;
+int bufferpos = 0;
+
+class buffer {
+	string name;
+	bool interrupt = false;
+	bool muted = false;
+	buffer_item@[] items;
+	int bpos = 0;
+
+	buffer(const string&in n) {
+		name = n;
+	}
+
+	void toggle_mute() {
+		muted = !muted;
+		speak(name + (muted ? " muted" : " unmuted"), true);
+	}
+
+	bool get_empty() const property {
+		return items.length() == 0;
+	}
+}
+
+class buffer_item {
+	string name;
+	buffer_item(const string&in n) {
+		name = n;
+	}
+}
+
+void create_buffer(const string&in name, int position = -1) {
+	if (get_buffer_index(name) >= 0) return;
+	if(position > -1)
+		buffers.insert_at(position, buffer(name));
+	else
+		buffers.insert_last(buffer(name));
+}
+
+int get_buffer_index(const string&in name) {
+	for (uint i = 0; i < buffers.length(); i++) {
+		if (buffers[i].name == name) return i;
+	}
+	return -1;
+}
+
+void add_buffer_item(const string&in buffername, const string&in itemname, bool auto_add = false) {
+	int idx = get_buffer_index(buffername);
+	if (idx == -1 && auto_add) {
+		create_buffer(buffername);
+		idx = get_buffer_index(buffername);
+	}
+	if (idx == -1) return;
+
+	if (!buffers[idx].muted) {
+		buffer_item item(itemname);
+		buffers[idx].items.insert_last(item);
+
+		// Also insert into "all" buffer if needed
+		if (get_buffer_index("all") == -1) create_buffer("all", 0);
+		buffers[get_buffer_index("all")].items.insert_last(item);
+
+		if (!buffers[0].muted) {
+			speak(itemname, false);
+		}
+	}
+}
+
+void move_to_buffer(int direction) {
+	if (buffers.length() == 0) return;
+
+	int original = bufferpos;
+	while (true) {
+		bufferpos += direction;
+		if (bufferpos < 0) bufferpos = 0;
+		if (bufferpos >= int(buffers.length())) bufferpos = buffers.length() - 1;
+
+		if (!buffers[bufferpos].empty) break; // Found a non-empty buffer
+		if (bufferpos == 0 || bufferpos == int(buffers.length()) - 1) break; // Reached edge
+	}
+
+	if (bufferpos != original) {
+		speak_current_buffer();
+	} else {
+		speak("No more buffers.", true);
+	}
+}
+
+void next_buffer() { move_to_buffer(1); }
+void previous_buffer() { move_to_buffer(-1); }
+void top_buffer() { bufferpos = 0; speak_current_buffer(); }
+void bottom_buffer() { bufferpos = buffers.length() - 1; speak_current_buffer(); }
+
+void speak_current_buffer() {
+	if (buffers.length() == 0) {
+		speak("No buffers.", true);
+		return;
+	}
+	auto@ b = buffers[bufferpos];
+	speak((b.muted ? "(muted) " : "") + b.name + ": " + b.items.length() + " items. " + (bufferpos + 1) + " of " + buffers.length(), true);
+}
+
+void mute_and_unmute_buffer() {
+	if (bufferpos < 0 || bufferpos >= int(buffers.length())) return;
+	buffers[bufferpos].toggle_mute();
+}
+
+// Navigation inside buffer items
+void next_buffer_item() { move_buffer_item(1); }
+void previous_buffer_item() { move_buffer_item(-1); }
+void top_buffer_item() { set_buffer_item(0); }
+void bottom_buffer_item() { set_buffer_item(buffers[bufferpos].items.length() - 1); }
+
+void move_buffer_item(int direction) {
+	if (buffers[bufferpos].empty) {
+		speak("Empty.");
+		return;
+	}
+
+	auto@ buf = buffers[bufferpos];
+	buf.bpos += direction;
+	if (buf.bpos < 0) buf.bpos = 0;
+	if (buf.bpos >= int(buf.items.length())) buf.bpos = buf.items.length() - 1;
+	speak(buf.items[buf.bpos].name);
+}
+
+void set_buffer_item(int pos) {
+	if (buffers[bufferpos].empty) {
+		speak("Empty.");
+		return;
+	}
+	auto@ buf = buffers[bufferpos];
+	buf.bpos = pos;
+	speak(buf.items[buf.bpos].name);
+}
+
+void copy_buffer_item() {
+	if (buffers.length() == 0 || buffers[bufferpos].empty) return;
+	clipboard_set_text(buffers[bufferpos].items[buffers[bufferpos].bpos].name);
+	speak("Copied buffer item to clipboard", true);
+}
+
+void export_buffers(const bool clear = true) {
+	// et the path you wish.
+	string bufferdir = DIRECTORY_MY_DOCUMENTS + "/mygame_logs";
+	if (buffers.length() == 0) return;
+	if (!directory_exists(bufferdir)) directory_create(bufferdir);
+
+	for (uint i = 0; i < buffers.length(); i++) {
+		auto@ buf = buffers[i];
+		if (buf.empty) continue;
+
+		file f;
+		if (f.open(bufferdir + "/" + buf.name + ".log", "ab")) {
+			f.write("Exported on " + DATE_MONTH + "/" + DATE_DAY + "/" + DATE_YEAR + "\r\n\r\n");
+			for (uint j = 0; j < buf.items.length(); j++) {
+				f.write(buf.items[j].name + "\r\n");
+			}
+			f.close();
+		}
+		if(clear) buf.items.resize(0);
+	}
+}
+
+const string get_DIRECTORY_MY_DOCUMENTS() property {
+	return DIRECTORY_HOME + "Documents";
+}

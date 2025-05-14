@@ -1,0 +1,42 @@
+#include "buffer.nvgt"
+#include "speech.nvgt"
+
+void main(){
+	show_window("Buffer Test");
+	create_buffer("foods");
+	create_buffer("drinks");
+	add_buffer_item("foods", "pizza");
+	add_buffer_item("foods", "cookie");
+	add_buffer_item("drinks", "soda");
+	add_buffer_item("drinks", "milk");
+
+	while(!key_pressed(KEY_ESCAPE)){
+		wait(5);
+		if(key_pressed(KEY_LEFTBRACKET)){
+			if(key_down(KEY_LSHIFT) || key_down(KEY_RSHIFT))
+				top_buffer();
+			else
+				previous_buffer();
+		}
+		if(key_pressed(KEY_RIGHTBRACKET)){
+			if(key_down(KEY_LSHIFT) || key_down(KEY_RSHIFT))
+				bottom_buffer();
+			else
+				next_buffer();
+		}
+		if(key_repeating(KEY_COMMA)){
+			if(key_down(KEY_LSHIFT) || key_down(KEY_RSHIFT))
+				top_buffer_item();
+			else
+				previous_buffer_item();
+		}
+		if(key_repeating(KEY_PERIOD)){
+			if(key_down(KEY_LSHIFT) || key_down(KEY_RSHIFT))
+				bottom_buffer_item();
+			else if(key_down(KEY_LALT) || key_down(KEY_RALT))
+				copy_buffer_item();
+			else
+				next_buffer_item();
+		}
+	}
+}
