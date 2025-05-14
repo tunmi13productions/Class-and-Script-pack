@@ -15,16 +15,8 @@ def ms_to_readable_time(ms):
  days, hours = divmod(hours, 24)
  #We know that 7d is equivalent to 1w, so we divide weeks by 7d.
  weeks, days = divmod(days, 7)
- #We know that 4w is equivalent to 1mo, so we divide weeks by 1mo.
- months, weeks = divmod(weeks, 4)
- #We know that 12mo is equivalent to 1yr, so we divide months by 1yr.
- years, months = divmod(months, 12)
- #Now for the readable string format. Taking the above concept that ms/1000 is 1 second, times 60 is one minute, times 60 is one hour, times 24 is 24 hours or 1 day, times 7 is 1 week, times 4 is 1 month, and times 12 is 1 year.
+ #Now for the readable string format. Taking the above concept that ms/1000 is 1 second, times 60 is one minute, times 60 is one hour, times 24 is 24 hours or 1 day, and times 7 is 1 week.
  human_readable = ""
- if years > 0:
-  human_readable += f"{years} {'year' if years == 1 else 'years'} "
- if months > 0:
-  human_readable += f"{months} {'month' if months == 1 else 'months'} "
  if weeks > 0:
   human_readable += f"{weeks} {'week' if weeks == 1 else 'weeks'} "
  if days > 0:
