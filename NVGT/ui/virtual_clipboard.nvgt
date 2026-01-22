@@ -1,0 +1,36 @@
+// A virtual clipboard.
+// useful for those who do not have NVDA, or if they do, do not have Speech History / Clip Copy
+
+class virtual_clipboard{
+	private string[] copied_items;
+	private string last_copied_item;
+	int clearance_threshold = 500; // The amount the clipboard can hold before needing to be cleared.
+
+	virtual_clipboard() { reset(); }
+
+	virtual_clipboard(const string content, const int threshold = 500){
+		set_text(content);
+		clearance_threshold = threshold;
+	}
+
+	void reset(){
+		last_copied_item = "";
+		copied_items.resize(0);
+	}
+
+	string get_text() property { return last_copied_item; }
+
+	void set_text(const string content) property {
+		if(last_copied_item == content)
+			return;
+		else{
+			last_copied_item = content;
+			if(copied_items.length() >= clearance_threshold)
+				copied_items.resize(0);
+			copied_items.insert_last(last_copied_item);
+		}
+	}
+
+}
+
+virtual_clipboard vclip;
