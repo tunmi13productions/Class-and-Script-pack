@@ -22,5 +22,5 @@ class virtual_clipboard:
 		else:
 			self.last_copied_item = content
 			if len(self.copied_items) >= self.clearance_threshold:
-				self.copied_items.clear()
+				del self.copied_items[0]
 			self.copied_items.append(self.last_copied_item)
